@@ -93,7 +93,7 @@ while [ $ADD_OTHER_ACCT == true ]; do
 
     # Add your custom GitHub account host to SSH configuration file.
     echo "[INFO] Adding a custom host for your $REPO_USERNAME account to $SSH_CONFIG_FILE file."
-    printf "Host ${RRS_SHORT}_${REPO_USERNAME}\n\tHostname github.com\n\tIdentityFile ${SSH_RRS_DIR}/${RRS_SHORT}_${REPO_USERNAME}\n\n" >> $SSH_CONFIG_FILE
+    printf "Host ${RRS_SHORT}_${REPO_USERNAME}\n\tHostname ${RRS}.com\n\tIdentityFile ${SSH_RRS_DIR}/${RRS_SHORT}_${REPO_USERNAME}\n\n" >> $SSH_CONFIG_FILE
     printf "\n\n"
     
     # Adding to GitHub account arrays
