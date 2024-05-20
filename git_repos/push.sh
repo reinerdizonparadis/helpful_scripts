@@ -10,7 +10,7 @@ repo_dir=""
 commit_msg=""
 
 print_usage() {
-  printf "Usage: $0  [-m <commit_msg>] [-p y/n] [-d <repo_dir>]\n"
+  printf "Usage: $0  [-m <commit_msg>] [-p y/n] [-a] [-d <repo_dir>]\n"
   printf "Options:\n"
   printf "  -m <commit_msg> ,    Defines the commit message for git commit command\n"
   printf "  -p <y/n> ,           Enables/disables pulling from remote repo \n" 
@@ -64,14 +64,6 @@ if ! [[ ${repo_dir} == "" ]] && [ ${repo_dir} != $(pwd) ]; then
 	cd ${repo_dir}
 fi
 printf "\n[INFO] Repo directory: $(pwd)\n\n"
-
-
-# printf "commit_msg = ${commit_msg}\n"
-# printf "pull_before_push_flag = ${pull_before_push_flag}\n"
-# printf "add_flag = ${add_flag}\n"
-# printf "repo_dir = ${repo_dir}\n"
-# printf "pwd = $(pwd)\n"
-# exit
 
 
 # Interactively asking user if they want to pull (if the '-p' was not passed)
