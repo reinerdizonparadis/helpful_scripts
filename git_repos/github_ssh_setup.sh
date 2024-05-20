@@ -8,19 +8,40 @@ REPO_ACCTS=()
 REMOTE_REPO_SRVC="GitHub"
 REMOTE_REPO_SRVC_SHORT="gh"
 
-
 ###############################################################
 # Introduction
 ###############################################################
+# Usage guide
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    printf "[INFO] Default Usage: Assumes GitHub as the remote repo service\n"
+    printf "\t\t$ ./github_ssh_setup.sh\n\n"
+    
+    printf "[INFO] Advanced Usage: Changes the remote repo service to the first two arguments to the bash script\n\n"
+    printf "\t\t$ ./github_ssh_setup.sh [<Remote Repo Service> <Abbr for Remote Repo Service>]\n\n"
+    printf "       Example Usage:\n"
+    printf "\t\t$ ./github_ssh_setup.sh GitHub gh\n\n"
+    exit 0
+fi
+
+
+# Replace RRS names if passed as arguments to the script
+if ! [ "$1" == "" ] && ! [ "$2" == "" ]; then
+    REMOTE_REPO_SRVC=$1
+    REMOTE_REPO_SRVC_SHORT=$2
+fi
+
+# Modified 
 RRS="${REMOTE_REPO_SRVC,,}"
 RRS_SHORT="${REMOTE_REPO_SRVC_SHORT,,}"
+
+
+
 
 printf "
 ###############################################################
 # GitHub SSH Setup
 ###############################################################
 "
-
 printf "\n Remote Repo Service: ${REMOTE_REPO_SRVC}"
 printf "\n Remote Repo Service (Short): ${REMOTE_REPO_SRVC_SHORT}"
 printf "\n\n"
