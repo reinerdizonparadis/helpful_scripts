@@ -3,6 +3,7 @@
 
 # Fail the script when one of the commands fail
 set -e
+clear
 
 
 # Variables
@@ -36,15 +37,15 @@ while getopts 'm:p:ad:Dh' OPTION; do
       pull_before_push_flag="$OPTARG"
       ;;
     a)
-		  add_flag=true
-		  ;;
+      add_flag=true
+      ;;
     d)
       repo_dir="$OPTARG"
       ;;
     D)
-			pull_before_push_flag="y"
-			add_flag=true
-			;;
+      pull_before_push_flag="y"
+      add_flag=true
+      ;;
     h)
       print_usage
       exit 0
@@ -59,51 +60,53 @@ done
 
 # Ask user if the current directory has the repo.
 if [[ -z ${repo_dir} ]]; then
-	printf "\n[INFO] Current directory: $(pwd)\n\n"
-	read -p "Are you in the current directory of your repo? (Y/n): " confirm
-	if [[ $confirm == [nN] || $confirm == [nN][oO] ]]; then
-		printf "\n"
-		read -p "Provide the repo directory: " repo_dir
-	else
-		repo_dir=$(pwd)
-	fi
+  printf "\n[INFO] Current directory: $(pwd)\n\n"
+  read -p "Are you in the current directory of your repo? (Y/n): " confirm
+  if [[ $confirm == [nN] || $confirm == [nN][oO] ]]; then
+    printf "\n"
+    read -p "Provide the repo directory: " repo_dir
+  else
+    repo_dir=$(pwd)
+  fi
 fi
 
 
 # Change directory if repo directory is different from current directory
 if [[ -n ${repo_dir} ]] && [[ ${repo_dir} != $(pwd) ]]; then
-	cd ${repo_dir}
+  repo_dir=${repo_dir/#\~/$HOME}
+  cd ${repo_dir}
 fi
 printf "\n[INFO] Repo directory: $(pwd)\n\n"
 
 
 # Interactively asking user if they want to pull (if the '-p' was not passed)
 if [[ -z ${pull_before_push_flag} ]] ; then
-	read -p "Do you want to pull from remote repo before pushing to it? (y/N): " confirm 
-	if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
-		pull_before_push=true
-	else
-		pull_before_push=false
-	fi
+  read -p "Do you want to pull from remote repo before pushing to it? (y/N): " confirm 
+  if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+    pull_before_push=true
+  else
+    pull_before_push=false
+  fi
 elif [[ ${pull_before_push_flag} == [yY] ]] ; then
-	pull_before_push=true
+  pull_before_push=true
 else
-	pull_before_push=false
+  pull_before_push=false
 fi
 
 
 # Pulling the remote repo for any changes
 if ${pull_before_push} ; then
-	printf "\n[INFO] Pulling from the remote repo for any changes...\n"
-	git pull
-	printf "\n[OK] Pull complete \n\n"
+  printf "\n[INFO] Pulling from the remote repo for any changes...\n"
+  git pull
+  printf "\n[OK] Pull complete \n\n"
 fi
 
 
 # Ask user if they want to proceed
 if ! ${add_flag} ; then
-	read -p "Do you want to stage all your changes/additions? (y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
-	add_flag=true
+  read -p "Do you want to stage all your changes/additions? (y/N): " confirm && \
+    [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || (printf "\n[INFO] Exiting now...\n\n"; exit 1)
+  add_flag=true
 fi
 
 
@@ -115,10 +118,10 @@ printf "\n[OK] All changes/additions have been staged, ready to commit\n\n"
 
 # Ask user for commit if the message was not passed as an argument with "-m" flag
 while [[ -z ${commit_msg} ]] ; do
-	read -p "Please add your commit message: " commit_msg
+  read -p "Please add your commit message: " commit_msg
 done
 
-# Committing changes	
+# Committing changes  
 printf "\n[INFO] Committing all changes on the local repo\n"
 git commit -m "${commit_msg}"
 printf "\n[OK] Changes committed, ready to push\n\n"
@@ -133,4 +136,4 @@ printf "\n[OK] Push done\n\n"
 # Pulling from the remote repo to double check
 printf "\n[INFO] Pulling from remote repo to double check\n\n"
 git pull
-printf "\n[OK] Double check done, exiting now...\n\n"
+printf "\n[OK] Double check done, Exiting now...\n\n"
