@@ -19,7 +19,7 @@ This script will interactively ask the user about staging, committing, and pushi
 
 ### Advanced (Automated) Usage: 
 ```bash
-./push_all_changes.sh  [-m <commit_msg>] [-p <y/n>] [-a] [-d <repo_dir>]
+./push_all_changes.sh  [-m <commit_msg>] [-p <y/n>] [-a] [-D] [-d <repo_dir>]
 ```
 
 |Options| Description|
