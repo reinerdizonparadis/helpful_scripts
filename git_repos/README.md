@@ -28,7 +28,7 @@ This script will interactively ask the user about staging, committing, and pushi
 |```-p <y/n>``` |           Enable/disable pulling from remote repo before pushing to it (Accepts "y" or "n")|
 |```-a``` |                 Allow all changes to be staged|
 |```-d <repo_dir>``` |      Set the repo directory other than the current directory|
-|```-D``` |                 Use default options (pull before push, stage all changes)|
+|```-D <commit_msg>``` |    Use default options and pass on the commit message (pull before push, stage all changes, use current path)|
 |```-h``` |                 Show the usage information|
 
 The script with all but the ```-h``` flags will run without the interactive mode.

@@ -15,19 +15,20 @@ commit_msg=""
 
 # Print Usage
 print_usage() {
-  printf "Usage: $0  [-m <commit_msg>] [-p <y/n>] [-a] [-D] [-d <repo_dir>]\n"
+  printf "Usage: $0  [-m <commit_msg>] [-p <y/n>] [-a] [-D <commit_msg>] [-d <repo_dir>]\n"
   printf "Options:\n"
   printf "  -m <commit_msg> ,    Define the commit message for git commit command\n"
   printf "  -p <y/n> ,           Enable/disable pulling from remote repo \n" 
   printf "                       before pushing to it (Accepts \"y\" or \"n\")\n"
   printf "  -a ,                 Allow all changes to be staged\n"
-  printf "  -D ,                 Use default options (pull before push, stage all changes)\n"
+  printf "  -D <commit_msg> ,    Use default options and pass on the commit message\n"
+  printf "                       (pull before push, stage all changes, use current path)\n"
   printf "  -d <repo_dir> ,      Set the repo directory other than the current directory\n"
 }
 
 
 # Argument parsing
-while getopts 'm:p:ad:Dh' OPTION; do
+while getopts 'm:p:ad:D:h' OPTION; do
   case "$OPTION" in
     m)
       commit_msg="$OPTARG"
@@ -44,6 +45,8 @@ while getopts 'm:p:ad:Dh' OPTION; do
     D)
       pull_before_push_flag="y"
       add_flag=true
+      repo_dir=$(pwd)
+      commit_msg="$OPTARG"
       ;;
     h)
       print_usage
