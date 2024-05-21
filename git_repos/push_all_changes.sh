@@ -3,7 +3,6 @@
 
 # Fail the script when one of the commands fail
 set -e
-clear
 
 
 # Variables
