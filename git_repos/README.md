@@ -19,7 +19,7 @@ This script will interactively ask the user about staging, committing, and pushi
 
 ### Advanced (Automated) Usage: 
 ```bash
-./push_all_changes.sh  [-m <commit_msg>] [-p y/n] [-a] [-d <repo_dir>]
+./push_all_changes.sh  [-m <commit_msg>] [-p <y/n>] [-a] [-d <repo_dir>]
 ```
 
 |Options| Description|
@@ -31,3 +31,13 @@ This script will interactively ask the user about staging, committing, and pushi
 |```-h``` |                 Shows the usage information
 
 The script with all but the ```-h``` flags will run without the interactive mode.
+
+
+### (For Windows) Using the script in Command Prompt in Interactive Mode
+* Make sure you have [Git Bash](https://git-scm.com/download/win) installed.
+* You will need both [```push_all_changes.sh```](https://raw.githubusercontent.com/reinerdizonparadis/helpful_scripts/main/git_repos/push_all_changes.sh) and [```upload_to_github.bat```](https://raw.githubusercontent.com/reinerdizonparadis/helpful_scripts/main/git_repos/upload_to_github.bat) scripts in the same folder.
+
+Open ```Command Prompt``` in the folder where the scripts are located and type the following command:
+```cmd
+upload_to_github.bat
+```

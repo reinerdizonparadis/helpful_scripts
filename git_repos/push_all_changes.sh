@@ -10,7 +10,7 @@ repo_dir=""
 commit_msg=""
 
 print_usage() {
-  printf "Usage: $0  [-m <commit_msg>] [-p y/n] [-a] [-d <repo_dir>]\n"
+  printf "Usage: $0  [-m <commit_msg>] [-p <y/n>] [-a] [-d <repo_dir>]\n"
   printf "Options:\n"
   printf "  -m <commit_msg> ,    Defines the commit message for git commit command\n"
   printf "  -p <y/n> ,           Enables/disables pulling from remote repo \n" 
