@@ -3,6 +3,7 @@
 
 # Fail the script when one of the commands fail
 set -e
+set -x
 
 
 # Variables
@@ -58,7 +59,7 @@ done
 
 
 # Ask user if the current directory has the repo.
-if [[ ${repo_dir} == "" ]]; then
+if [[ -z ${repo_dir} ]]; then
 	printf "\n[INFO] Current directory: $(pwd)\n\n"
 	read -p "Are you in the current directory of your repo? (Y/n): " confirm
 	if [[ $confirm == [nN] || $confirm == [nN][oO] ]]; then
@@ -71,14 +72,14 @@ fi
 
 
 # Change directory if repo directory is different from current directory
-if ! [[ ${repo_dir} == "" ]] && [ ${repo_dir} != $(pwd) ]; then
+if [[ -n ${repo_dir} ]] && [[ ${repo_dir} != $(pwd) ]]; then
 	cd ${repo_dir}
 fi
 printf "\n[INFO] Repo directory: $(pwd)\n\n"
 
 
 # Interactively asking user if they want to pull (if the '-p' was not passed)
-if [ "${pull_before_push_flag}" == "" ] ; then
+if [[ -z ${pull_before_push_flag} ]] ; then
 	read -p "Do you want to pull from remote repo before pushing to it? (y/N): " confirm 
 	if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
 		pull_before_push=true
@@ -114,7 +115,7 @@ printf "\n[OK] All changes/additions have been staged, ready to commit\n\n"
 
 
 # Ask user for commit if the message was not passed as an argument with "-m" flag
-while [[ ${commit_msg} == "" ]] ; do
+while [[ -z ${commit_msg} ]] ; do
 	read -p "Please add your commit message: " commit_msg
 done
 
