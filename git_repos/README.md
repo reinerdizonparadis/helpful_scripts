@@ -24,11 +24,12 @@ This script will interactively ask the user about staging, committing, and pushi
 
 |Options| Description|
 |:----|:----|
-|```-m <commit_msg>``` |    Defines the commit message for git commit command<br>|
-|```-p <y/n>``` |           Enables/disables pulling from remote repo before pushing to it (Accepts "y" or "n")<br>|
-|```-a``` |                 Allows all changes to be staged<br>|
-|```-d <repo_dir>``` |      Sets the repo directory other than the current directory<br>|
-|```-h``` |                 Shows the usage information
+|```-m <commit_msg>``` |    Define the commit message for git commit command|
+|```-p <y/n>``` |           Enable/disable pulling from remote repo before pushing to it (Accepts "y" or "n")|
+|```-a``` |                 Allow all changes to be staged|
+|```-d <repo_dir>``` |      Set the repo directory other than the current directory|
+|```-D``` |                 Use default options (pull before push, stage all changes)|
+|```-h``` |                 Show the usage information|
 
 The script with all but the ```-h``` flags will run without the interactive mode.
 

@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
 # script file for staging, committing, and pushing to the remote repo (all changes and additions)
 
+# Fail the script when one of the commands fail
 set -e
 
+
+# Variables
 pull_before_push_flag=""
 pull_before_push=false
 add_flag=false
 repo_dir=""
 commit_msg=""
 
+
+# Print Usage
 print_usage() {
-  printf "Usage: $0  [-m <commit_msg>] [-p <y/n>] [-a] [-d <repo_dir>]\n"
+  printf "Usage: $0  [-m <commit_msg>] [-p <y/n>] [-a] [-D] [-d <repo_dir>]\n"
   printf "Options:\n"
-  printf "  -m <commit_msg> ,    Defines the commit message for git commit command\n"
-  printf "  -p <y/n> ,           Enables/disables pulling from remote repo \n" 
+  printf "  -m <commit_msg> ,    Define the commit message for git commit command\n"
+  printf "  -p <y/n> ,           Enable/disable pulling from remote repo \n" 
   printf "                       before pushing to it (Accepts \"y\" or \"n\")\n"
-  printf "  -a ,                 Allows all changes to be staged\n"
-  printf "  -d <repo_dir> ,      Sets the repo directory other than the current directory\n"
+  printf "  -a ,                 Allow all changes to be staged\n"
+  printf "  -D ,                 Use default options (pull before push, stage all changes)\n"
+  printf "  -d <repo_dir> ,      Set the repo directory other than the current directory\n"
 }
 
 
-while getopts 'm:p:ad:h' OPTION; do
+# Argument parsing
+while getopts 'm:p:ad:Dh' OPTION; do
   case "$OPTION" in
     m)
       commit_msg="$OPTARG"
@@ -29,11 +36,15 @@ while getopts 'm:p:ad:h' OPTION; do
       pull_before_push_flag="$OPTARG"
       ;;
     a)
-	  add_flag=true
-	  ;;
+		  add_flag=true
+		  ;;
     d)
       repo_dir="$OPTARG"
       ;;
+    D)
+			pull_before_push_flag="y"
+			add_flag=true
+			;;
     h)
       print_usage
       exit 0
