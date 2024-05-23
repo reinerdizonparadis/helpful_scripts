@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # script file for staging, committing, and pushing to the remote repo (all changes and additions)
 
 # Fail the script when one of the commands fail

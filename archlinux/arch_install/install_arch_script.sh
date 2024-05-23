@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ## (Optional) Change Terminal Font Size
 setfont -d
 
@@ -6,7 +8,7 @@ setfont -d
 efivar -l
 
 
-## Get Wi-Fi Internet Working
+## Get Wi-Fi Internet Working (Optional)
 iwctl
 device list                     # Get Wi-Fi devices (e.g., wlan0)
 station wlan0 get-networks      # Get networks
@@ -100,8 +102,8 @@ passwd
 
 
 ## Add user and add sudo permissions
-useradd -m -g users -G wheel,storage,power -s /bin/bash usr03
-passwd usr03
+useradd -m -g users -G wheel,storage,power -s /bin/bash reinerdizon
+passwd reinerdizon
 EDITOR=nano visudo
 # uncomment "%wheel ALL=(ALL) ALL"
 
@@ -110,6 +112,7 @@ EDITOR=nano visudo
 mount -t efivarfs efivarfs /sys/firmware/efi/efivars/
 
 
+#######################################################################################################
 ## Install bootloader using systemd boot
 bootctl install --efi-boot-option-description="Arch Linux"
 
@@ -129,91 +132,9 @@ nano /boot/loader/entries/arch_default.conf
 echo "options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/nvme0n1p3) rw" >> /boot/loader/entries/arch_default.conf
 
 
-## Copy Windows EFI
-mkdir -p /mnt/windows_boot
-mount /dev/<yourWindowsEFIparition> /mnt/windows_boot
-cp -r /mnt/windows_boot/EFI/Microsoft /boot/EFI/Microsoft
-umount /mnt/windows_boot
-
-
-## Add bootloader entry for Windows
-nano /boot/loader/entries/windows.conf
-##################################################################
-# Type the following
-##################################################################
-# title Windows
-# efi /EFI/Microsoft/Boot/bootmgfw.efi
-##################################################################
-# Save the file
-##################################################################
-
-
-## Set Arch Linux as default entry
-nano /boot/loader/loader.conf
-##################################################################
-# Type the following
-##################################################################
-# default arch_linux.conf
-# timeout 5
-# console-mode max
-##################################################################
-# Save the file
-##################################################################
-
-
 ## Enable Network Manager and bluetooth services
 systemctl enable NetworkManager.service
 systemctl enable bluetooth.service
-
-
-## Add NVIDIA drivers
-pacman -S nvidia-dkms nvidia-utils opencl-nvidia libglvnd lib32-libglvnd lib32-nvidia-utils lib32-opencl-nvidia nvidia-settings
-
-
-## Regenerate the initramfs for NVIDIA drivers
-nano /etc/mkinitcpio.conf
-##################################################################
-# Change the line starting "MODULES = ()"
-##################################################################
-# MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-##################################################################
-
-
-## Edit Arch Linux bootloader
-nano /boot/loader/entries/arch_default.conf
-##################################################################
-# Make the following edit:
-##################################################################
-# title Arch Linux
-# linux /vmlinuz-linux
-# initrd /intel-ucode.img
-# initrd /initramfs-linux.img
-# options root=... rw nvidia-drm.modeset=1
-##################################################################
-# Save the file
-##################################################################
-
-
-## Create update hooks for NVIDIA driver updates
-mkdir -p /etc/pacman.d/hooks
-nano /etc/pacman.d/hooks/nvidia.hook
-##################################################################
-# Add the following
-##################################################################
-# [Trigger]
-# Operation=Install
-# Operation=Upgrade
-# Operation=Remove
-# Type=Package
-# Target=nvidia
-
-# [Action]
-# Depends=mkinitcpio
-# When=PostTransaction
-# Exec=/usr/bin/mkinitcpio -P
-##################################################################
-# Save the file
-##################################################################
 
 
 ## Exit chroot
@@ -261,7 +182,7 @@ rm -rf ~/yay
 
 
 ## Install missing firmware
-yay mkinitcpio-firmware
+yay -S --noconfirm mkinitcpio-firmware
 
 
 ## Reboot machine and login again to user account
@@ -272,15 +193,14 @@ sudo reboot
 ## PICK A DESKTOP ENVIRONMENT
 ####################################################################
 ## Install KDE-Plasma & other programs and enable SDDM for logging in
-sudo pacman -S --noconfirm xorg plasma sddm dolphin konsole
+sudo pacman -S xorg plasma sddm dolphin konsole
 sudo systemctl enable sddm.service
 
 
 ## Install Cinnamon & other programs and enable LightDM for logging in
-sudo pacman -S --noconfirm xorg cinnamon lightdm lightdm-gtk-greeter gnome-system-monitor nemo-file-roller gnome-terminal
+sudo pacman -S xorg cinnamon lightdm lightdm-gtk-greeter gnome-system-monitor nemo-file-roller gnome-terminal
 sudo systemctl enable lightdm.service
 ####################################################################
-
 
 ## Install another browser and text editor from AUR
 yay -S --noconfirm brave-bin sublime-text-4
@@ -288,3 +208,4 @@ yay -S --noconfirm brave-bin sublime-text-4
 
 ## Reboot machine
 sudo reboot
+
