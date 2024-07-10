@@ -8,5 +8,5 @@ conda export --no-builds environment.yml
 
 * ```requirements.txt``` format
 ```bash
-pip list --format=freeze requirements.txt
+pip list --format=freeze > requirements.txt
 ```
