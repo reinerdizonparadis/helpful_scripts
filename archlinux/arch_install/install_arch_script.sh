@@ -27,9 +27,9 @@ z # Format Disk
 cgdisk /dev/nvme0n1
 ##################################################################
 # Size          Partition Type                  Partition Name
-# 1024MiB       EFI System Partition (EF00)     name: boot
-# 15686MiB      Swap (8200)                     name: swap
-# 40GiB         Ext4 (8300)                     name: root
+# 1GiB          EFI System Partition (EF00)     name: boot
+# 24GiB         Swap (8200)                     name: swap
+# 64GiB         Ext4 (8300)                     name: root
 # remaining     Ext4 (8300)                     name: home
 ##################################################################
 # Press on Write, then Quit
@@ -59,7 +59,7 @@ rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 
 
 ## Install Arch Linux
-pacstrap -K /mnt base base-devel linux linux-firmware linux-headers sof-firmware networkmanager bluez bluez-utils pipewire nano bash-completion intel-ucode dhcpcd neofetch
+pacstrap -K /mnt base base-devel linux linux-headers linux-lts linux-lts-headers linux-firmware sof-firmware networkmanager bluez bluez-utils pipewire nano bash-completion intel-ucode sudo archlinux-keyring wget
 
 
 ## Create fstab file so Arch can recognize partitions
@@ -148,10 +148,6 @@ poweroff
 setfont -d
 
 
-## (Optional) Confirm Arch Linux installation
-neofetch
-
-
 ## Check for failed services
 systemctl --failed
 
@@ -181,29 +177,13 @@ cd ~
 rm -rf ~/yay
 
 
-## Install missing firmware
-yay -S --noconfirm mkinitcpio-firmware
+## Install initial AUR Packages (including missing firmware)
+yay -S --noconfirm mkinitcpio-firmware fastfetch brave-bin sublime-text-4
 
 
-## Reboot machine and login again to user account
-sudo reboot
-
-
-####################################################################
-## PICK A DESKTOP ENVIRONMENT
-####################################################################
 ## Install KDE-Plasma & other programs and enable SDDM for logging in
-sudo pacman -S xorg plasma sddm dolphin konsole
+sudo pacman -S --noconfirm xorg plasma sddm dolphin konsole
 sudo systemctl enable sddm.service
-
-
-## Install Cinnamon & other programs and enable LightDM for logging in
-sudo pacman -S xorg cinnamon lightdm lightdm-gtk-greeter gnome-system-monitor nemo-file-roller gnome-terminal
-sudo systemctl enable lightdm.service
-####################################################################
-
-## Install another browser and text editor from AUR
-yay -S --noconfirm brave-bin sublime-text-4
 
 
 ## Reboot machine
