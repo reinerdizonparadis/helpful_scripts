@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo pacman -Sc --noconfirm
+# sudo pacman -Sc --noconfirm
 yay -Sc --noconfirm

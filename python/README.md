@@ -3,7 +3,7 @@
 ## Saving Environment
 * ```environment.yml``` format
 ```bash
-conda export --no-builds -f environment.yml
+conda env export --no-builds | grep -v "prefix" > environment.yml
 ```
 
 * ```requirements.txt``` format

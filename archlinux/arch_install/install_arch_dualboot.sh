@@ -175,7 +175,7 @@ pacman -S nvidia-dkms nvidia-utils opencl-nvidia libglvnd lib32-libglvnd lib32-n
 ## Regenerate the initramfs for NVIDIA drivers
 nano /etc/mkinitcpio.conf
 ##################################################################
-# Change the line starting "MODULES = ()"
+# Change the line starting "MODULES=()"
 ##################################################################
 # MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 ##################################################################
