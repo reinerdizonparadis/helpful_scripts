@@ -11,19 +11,23 @@ pull_before_push=false
 add_flag=false
 repo_dir=""
 commit_msg=""
+script_name=${0##*/}
 
 
 # Print Usage
 print_usage() {
-  printf "Usage: $0  [-m <commit_msg>] [-p <y/n>] [-a] [-D <commit_msg>] [-d <repo_dir>]\n"
-  printf "Options:\n"
-  printf "  -m <commit_msg> ,    Define the commit message for git commit command\n"
-  printf "  -p <y/n> ,           Enable/disable pulling from remote repo \n" 
-  printf "                       before pushing to it (Accepts \"y\" or \"n\")\n"
-  printf "  -a ,                 Allow all changes to be staged\n"
-  printf "  -D <commit_msg> ,    Use default options and pass on the commit message\n"
-  printf "                       (pull before push, stage all changes, use current path)\n"
-  printf "  -d <repo_dir> ,      Set the repo directory other than the current directory\n"
+  printf "
+Usage: 
+  \t${script_name}  [-m <commit_msg>] [-p <y/n>] [-a] [-d <repo_dir>] [-D <commit_msg>]
+
+Options:
+  -m <commit_msg> ,    Define the commit message for git commit command
+  -p <y/n> ,           Enable/disable pulling from remote repo
+                       before pushing to it (Accepts \"y\" or \"n\")
+  -a ,                 Allow all changes to be staged
+  -d <repo_dir> ,      Set the repo directory other than the current directory
+  -D <commit_msg> ,    Use default options and pass on the commit message
+                       (pull before push, stage all changes, use current path)\n"
 }
 
 
